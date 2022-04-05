@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Dados de: {{ username }}</h2>
+
+<div mat-dialog-content>
+    <mat-progress-spinner color="primary" mode="indeterminate"
+        *ngIf="user == null; else content">
+    </mat-progress-spinner>
+
+    <ng-template #content>
+        <div class="profile">
+            <img [src]="user?.avatar_url" id="avatar">
+            <h2 mat-dialog-title> {{ user?.name }} </h2>
+            <div class="linkProfile">
+                <p><mat-icon>account_circle</mat-icon></p>
+                <a [href]="user?.html_url" target="_blanck" class="linksProfile">
+                    <h3> {{ user?.login }} </h3> 
+                </a>
+            </div>
+            <p id="profile-Bio">{{ user?.bio }}</p>
+        </div>
+
+        <div class="profileInfo">
+            <div class="info">
+                <h4> <mat-icon> place</mat-icon> Localização: {{ user?.location }}</h4>
+                <h4> <mat-icon>computer</mat-icon> Id: {{user?.id}} </h4>
+                <h4> <mat-icon>event_note</mat-icon> Data de criação: {{user?.created_at | date }} </h4>
+            </div><br>
+            <div class="info">
+                <h4> <mat-icon>people</mat-icon> Seguidores: {{ user?.followers }} </h4>
+                <h4> <mat-icon>person_add</mat-icon> Seguindo: {{ user?.following }} </h4>
+                <h4> <mat-icon>public</mat-icon> Repositórios: {{ user?.public_repos}} </h4>
+            </div>
+        </div>
+
+        <h3>Repositórios populares:</h3>
+        <div class="reposCards">
+            <mat-card *ngFor="let r of repos" class="repos">
+                <a [href]="r?.html_url" target="_blank" class="linksRepos">
+                    <mat-card-title>{{ r?.name }}</mat-card-title>
+                    <mat-card-subtitle>{{ r?.description }}</mat-card-subtitle>
+                    <mat-card-footer class="reposLang">
+                        <p> <strong> {{ r?.language }} </strong></p>
+                        <p> <mat-icon>star</mat-icon> Estrelas: {{ r?.stargazers_count }} </p>
+                    </mat-card-footer>
+                </a>
+            </mat-card>
+        </div>
+    </ng-template>
+</div>
